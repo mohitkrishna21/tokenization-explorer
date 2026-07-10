@@ -2,7 +2,7 @@ from transformers import AutoTokenizer
 from sentence_transformers import SentenceTransformer
 import numpy as np
 
-# ── Load models ──────────────────────────────────────────
+# Load models
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
@@ -14,19 +14,19 @@ def explore_tokenization(text):
     tokens = tokenizer.tokenize(text)
     token_ids = tokenizer.encode(text)
 
-    print(f"\n📌 TOKENS ({len(tokens)} total):")
+    print(f"\n[TOKENS] ({len(tokens)} total):")
     print(tokens)
 
-    print(f"\n🔢 TOKEN IDs:")
+    print(f"\n[TOKEN IDs]")
     print(token_ids)
 
-    print(f"\n📖 TOKEN → ID MAPPING:")
+    print(f"\n[TOKEN-ID MAPPING]")
     for token, tid in zip(tokens, token_ids[1:-1]):
-        print(f"   '{token}' → {tid}")
+        print(f"   '{token}' -> {tid}")
 
 def explore_embeddings(text):
     embedding = embedding_model.encode(text)
-    print(f"\n🧠 EMBEDDING for: '{text}'")
+    print(f"\n[EMBEDDING] for: '{text}'")
     print(f"   Vector size: {embedding.shape[0]} dimensions")
     print(f"   First 5 values: {embedding[:5].round(4)}")
     return embedding
@@ -39,23 +39,23 @@ def semantic_similarity(text1, text2):
         np.linalg.norm(emb1) * np.linalg.norm(emb2)
     )
 
-    print(f"\n🔍 SEMANTIC SIMILARITY")
+    print(f"\n[SIMILARITY]")
     print(f"   Text 1: '{text1}'")
     print(f"   Text 2: '{text2}'")
-    print(f"   Similarity Score: {similarity:.4f}")
+    print(f"   Score: {similarity:.4f}")
 
     if similarity > 0.8:
-        print("   Verdict: 🟢 Very similar")
+        print("   Verdict: HIGH similarity")
     elif similarity > 0.5:
-        print("   Verdict: 🟡 Somewhat similar")
+        print("   Verdict: MODERATE similarity")
     else:
-        print("   Verdict: 🔴 Not similar")
+        print("   Verdict: LOW similarity")
 
-# ── Main Menu ─────────────────────────────────────────────
+# Main Menu
 if __name__ == "__main__":
     while True:
         print("\n" + "="*60)
-        print("🤖 TOKENIZATION & EMBEDDING EXPLORER")
+        print("TOKENIZATION & EMBEDDING EXPLORER")
         print("="*60)
         print("1. Explore Tokenization")
         print("2. Explore Embeddings")
@@ -79,8 +79,8 @@ if __name__ == "__main__":
             semantic_similarity(text1, text2)
 
         elif choice == "4":
-            print("\nBye! 👋")
+            print("\nExiting.")
             break
 
         else:
-            print("\n❌ Invalid option. Please choose 1-4.")
+            print("\nInvalid option. Please choose 1-4.")
